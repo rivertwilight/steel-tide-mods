@@ -1,7 +1,7 @@
 {
   "format": "steel-tide-mod-index",
   "v": 1,
-  "generated": "2026-09-08T14:53:58.446Z",
+  "generated": "2026-09-08T14:54:32.723Z",
   "mods": [
     {
       "id": "ironworks",
@@ -111,6 +111,7 @@
       "homepage": "https://store.steampowered.com/app/370390/Rusted_Warfare__RTS/",
       "path": "mods/rusted-expansion",
       "base": "https://raw.githubusercontent.com/rivertwilight/steel-tide-mods/main/mods/rusted-expansion/",
+      "updated": "2026-09-08T22:53:58+08:00",
       "defs": [
         {
           "id": "rusted-tank",
