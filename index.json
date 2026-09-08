@@ -1,7 +1,7 @@
 {
   "format": "steel-tide-mod-index",
   "v": 1,
-  "generated": "2026-09-08T04:36:30.866Z",
+  "generated": "2026-09-08T05:46:27.784Z",
   "mods": [
     {
       "id": "bison-ii",
@@ -12,8 +12,8 @@
       "version": "1.0.0",
       "author": "Steel Tide",
       "description": [
-        "A heavier Bison for the late game. The smallest mod there is: one vanilla tank, copied and re-tuned.",
-        "后期用的重型野牛。最小的模组：复制一辆原版坦克，再调数值。"
+        "A heavier Bison for the late game, with its own hull and turret. The smallest mod there is: one vanilla tank, copied, re-tuned and repainted.",
+        "后期用的重型野牛，有自己的车体和炮塔。最小的模组：复制一辆原版坦克，调数值、换图。"
       ],
       "license": "CC-BY-4.0",
       "path": "mods/bison-ii",
@@ -30,12 +30,29 @@
             "Bison II",
             "野牛 II"
           ],
-          "sprite": "u.mbt",
-          "turretSprite": "tur.mbt",
+          "sprite": "u.bison2",
+          "turretSprite": "tur.bison2",
           "extends": "mbt"
         }
       ],
-      "sprites": []
+      "sprites": [
+        {
+          "key": "u.bison2",
+          "file": "sprites/u.bison2.png",
+          "frames": 1,
+          "rotated": true,
+          "w": 432,
+          "h": 512
+        },
+        {
+          "key": "tur.bison2",
+          "file": "sprites/tur.bison2.png",
+          "frames": 1,
+          "rotated": true,
+          "w": 271,
+          "h": 512
+        }
+      ]
     },
     {
       "id": "ironworks",
@@ -95,18 +112,18 @@
       "sprites": [
         {
           "key": "u.ironworks-hover",
-          "file": "sprites/hover.png",
+          "file": "sprites/u.ironworks-hover.png",
           "frames": 1,
           "rotated": true,
-          "w": 48,
-          "h": 52
+          "w": 432,
+          "h": 512
         },
         {
           "key": "u.ironworks-bunker",
-          "file": "sprites/bunker.png",
-          "frames": 2,
-          "w": 256,
-          "h": 128
+          "file": "sprites/u.ironworks-bunker.png",
+          "frames": 1,
+          "w": 512,
+          "h": 512
         }
       ]
     }

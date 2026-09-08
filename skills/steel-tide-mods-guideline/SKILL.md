@@ -1,3 +1,8 @@
+---
+name: steel-tide-mods-guideline
+description: Make, test and publish a mod for Steel Tide, the browser RTS — new units, buildings and upgrade levels in one mod.json. Use when asked to create or edit a Steel Tide mod, write its manifest or sprite sheets, validate it, or publish it to the steel-tide-mods registry.
+license: MIT
+---
 # Making a Steel Tide mod — brief for a coding agent
 
 You are helping make a mod for Steel Tide (https://steelti.de), a browser real-time strategy game.

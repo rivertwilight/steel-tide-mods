@@ -2506,10 +2506,8 @@ const STRINGS = {
   "settings.section.dev": ["Developer", "开发者"],
   // ------------------------------------------------------------- mods (ui/modsPage.ts)
   "mods.title": ["Mods", "模组"],
-  "mods.lead": ["New units, buildings and upgrades, made by players. They apply to skirmish and campaign; a networked match is always unmodded.", "玩家制作的新单位、建筑与升级。适用于遭遇战和战役；联机对战始终不含模组。"],
   "mods.pending": ["Changes take effect after this match.", "更改将在本场结束后生效。"],
   "mods.installed": ["Installed", "已安装"],
-  "mods.none": ["No mods installed.", "尚未安装模组。"],
   "mods.adds": ["{0} units, {1} buildings", "{0} 个单位，{1} 座建筑"],
   "mods.by": ["by {0}", "作者：{0}"],
   "mods.source.registry": ["from the registry", "来自官方仓库"],
@@ -2529,6 +2527,9 @@ const STRINGS = {
   "mods.registry.offline": ["The registry could not be reached.", "无法连接到模组仓库。"],
   "mods.registry.empty": ["No mods published yet.", "尚无已发布的模组。"],
   "mods.registry.browse": ["Browse on the website", "在官网浏览"],
+  "mods.search": ["Search", "搜索"],
+  "mods.searchHint": ["Name, author, unit…", "名称、作者、单位…"],
+  "mods.searchNone": ['Nothing matches "{0}".', "没有匹配“{0}”的模组。"],
   "mods.install": ["Install", "安装"],
   "mods.installing": ["Installing…", "安装中…"],
   "mods.installedMark": ["Installed", "已安装"],
@@ -3063,8 +3064,8 @@ const DEF_SPECS = [
   { name: "altitude", type: "number", only: "unit", min: 0, max: 64, def: "12", doc: ["an aircraft's drawn height, px", "飞行器的绘制高度（像素）"] },
   { name: "fireOnMove", type: "bool", only: "unit", doc: ["keeps shooting on a plain move", "移动时持续开火"] },
   { name: "trail", type: "enum", values: TRAILS, only: "unit", def: "by domain", doc: ["the mark it leaves", "留下的痕迹"] },
-  { name: "sprite", type: "string", max: 48, def: "u.<id>", doc: ["the body's atlas key: one of this mod's sheets, or a vanilla key to borrow its art", "主体图像键：本模组的精灵图，或借用原版的键"] },
-  { name: "turretSprite", type: "string", max: 48, doc: ["the rotating part's key, if any", "旋转部件的图像键（若有）"] },
+  { name: "sprite", type: "string", max: 48, def: "this mod's u.<id> sheet, else the base's art", doc: ["the body's atlas key: one of this mod's sheets, or a vanilla key to borrow its art", "主体图像键：本模组的精灵图，或借用原版的键"] },
+  { name: "turretSprite", type: "string", max: 48, def: "this mod's tur.<id> sheet, else the base's (when its art is kept)", doc: ["the rotating part's key, if any", "旋转部件的图像键（若有）"] },
   { name: "aliases", type: "strings", doc: ["other names the console's `give` accepts", "控制台 `give` 接受的别名"] },
   { name: "aiWeight", type: "number", only: "unit", min: 0, max: 10, def: "0", doc: ["how readily the AI builds it — a Bison is 3, a scout car 1; 0 never", "AI 生产它的倾向——野牛是 3，侦察车 1；0 为从不"] }
 ];
@@ -3427,7 +3428,8 @@ function resolveMod(mod, table = VANILLA) {
     if (own.kind === void 0) own.kind = kind;
     const def = buildDef(own, kind, base, mod.id, path, errors, warnings);
     if (!def) return;
-    const bodyKey = own.sprite ?? (base?.sprite && !own.sprite ? base.sprite : `u.${id}`);
+    const ownSheet = sheetKeys.has(`u.${id}`);
+    const bodyKey = own.sprite ?? (ownSheet ? `u.${id}` : base?.sprite ?? `u.${id}`);
     if (!sheetKeys.has(bodyKey) && !tableSprites.has(bodyKey)) {
       if (own.sprite) errors.push({ path: `${path}.sprite`, message: `"${bodyKey}" is neither a sheet of this mod nor art the game has` });
       else {
@@ -3436,13 +3438,13 @@ function resolveMod(mod, table = VANILLA) {
       }
     }
     def.sprite = bodyKey;
-    const turretKey = own.turretSprite ?? (own.sprite ? void 0 : base?.turretSprite);
+    const ownTurret = sheetKeys.has(`tur.${id}`);
+    const turretKey = own.turretSprite ?? (ownTurret ? `tur.${id}` : own.sprite !== void 0 || ownSheet ? void 0 : base?.turretSprite);
     if (turretKey !== void 0) {
       if (!sheetKeys.has(turretKey) && !tableSprites.has(turretKey)) {
         errors.push({ path: `${path}.turretSprite`, message: `"${turretKey}" is neither a sheet of this mod nor art the game has` });
       } else def.turretSprite = turretKey;
-    } else if (sheetKeys.has(`tur.${id}`)) def.turretSprite = `tur.${id}`;
-    else delete def.turretSprite;
+    } else delete def.turretSprite;
     for (const wp of def.weapons) if (wp.turret === void 0) wp.turret = !!def.turretSprite;
     for (const a of def.aliases ?? []) {
       if (aliases.has(a) || table[a] || built.has(a)) errors.push({ path: `${path}.aliases`, message: `"${a}" is already a name of another def` });
@@ -3905,8 +3907,8 @@ function exampleFull() {
       }
     ],
     sprites: [
-      { key: "u.ironworks-hover", file: "sprites/hover.png", frames: 1, rotated: true, fw: 24, fh: 24 },
-      { key: "u.ironworks-bunker", file: "sprites/bunker.png", frames: 1 }
+      { key: "u.ironworks-hover", file: "sprites/u.ironworks-hover.png", frames: 1, rotated: true, fw: 24, fh: 26 },
+      { key: "u.ironworks-bunker", file: "sprites/u.ironworks-bunker.png", frames: 1 }
     ]
   };
 }

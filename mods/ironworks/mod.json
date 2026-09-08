@@ -2,16 +2,28 @@
   "format": "steel-tide-mod",
   "v": 1,
   "id": "ironworks",
-  "name": ["Ironworks", "铁工厂"],
+  "name": [
+    "Ironworks",
+    "铁工厂"
+  ],
   "version": "1.0.0",
   "author": "Steel Tide",
-  "description": ["A hover tank with its own art, a bunker, and a fourth level for the power plant line — one of each thing a mod can add.", "一辆自带图像的悬浮坦克、一座碉堡和发电厂线的第四级——模组能加的每种东西各一个。"],
+  "description": [
+    "A hover tank with its own art, a bunker, and a fourth level for the power plant line — one of each thing a mod can add.",
+    "一辆自带图像的悬浮坦克、一座碉堡和发电厂线的第四级——模组能加的每种东西各一个。"
+  ],
   "license": "CC-BY-4.0",
   "defs": [
     {
       "id": "ironworks-hover",
-      "name": ["Skimmer Hover Tank", "掠行悬浮坦克"],
-      "desc": ["Fast and thin-skinned, with a rocket pod that shreds light vehicles.", "快而皮薄，火箭巢专撕轻型载具。"],
+      "name": [
+        "Skimmer Hover Tank",
+        "掠行悬浮坦克"
+      ],
+      "desc": [
+        "Fast and thin-skinned, with a rocket pod that shreds light vehicles.",
+        "快而皮薄，火箭巢专撕轻型载具。"
+      ],
       "kind": "unit",
       "domain": "ground",
       "tier": 2,
@@ -26,15 +38,35 @@
       "trail": "tire",
       "fireOnMove": true,
       "weapons": [
-        { "id": "pods", "cls": "rocket", "dmg": 16, "reload": 2.2, "range": 4.5, "burst": 4, "burstDelay": 0.1, "splash": 10, "spread": 14, "muzzleOffset": 10 }
+        {
+          "id": "pods",
+          "cls": "rocket",
+          "dmg": 16,
+          "reload": 2.2,
+          "range": 4.5,
+          "burst": 4,
+          "burstDelay": 0.1,
+          "splash": 10,
+          "spread": 14,
+          "muzzleOffset": 10
+        }
       ],
-      "producedBy": ["factory2", "factory3"],
+      "producedBy": [
+        "factory2",
+        "factory3"
+      ],
       "aiWeight": 1
     },
     {
       "id": "ironworks-bunker",
-      "name": ["Bunker", "碉堡"],
-      "desc": ["A concrete gun pit that takes a beating and holds a line.", "扛打的混凝土火力点，守得住一条线。"],
+      "name": [
+        "Bunker",
+        "碉堡"
+      ],
+      "desc": [
+        "A concrete gun pit that takes a beating and holds a line.",
+        "扛打的混凝土火力点，守得住一条线。"
+      ],
       "kind": "building",
       "tier": 1,
       "cost": 380,
@@ -45,13 +77,34 @@
       "power": -3,
       "vision": 8,
       "weapons": [
-        { "id": "gun", "cls": "autocannon", "dmg": 22, "reload": 0.5, "range": 5, "targets": ["ground", "ship"], "turret": false, "muzzleOffset": 20, "mult": { "structure": 0.4 } }
+        {
+          "id": "gun",
+          "cls": "autocannon",
+          "dmg": 22,
+          "reload": 0.5,
+          "range": 5,
+          "targets": [
+            "ground",
+            "ship"
+          ],
+          "turret": false,
+          "muzzleOffset": 20,
+          "mult": {
+            "structure": 0.4
+          }
+        }
       ]
     },
     {
       "id": "ironworks-fusion",
-      "name": ["Fusion Plant", "聚变电站"],
-      "desc": ["The fourth level of the power plant line: a reactor's output on a plant's footprint.", "发电厂线的第四级：反应堆的产出，发电厂的占地。"],
+      "name": [
+        "Fusion Plant",
+        "聚变电站"
+      ],
+      "desc": [
+        "The fourth level of the power plant line: a reactor's output on a plant's footprint.",
+        "发电厂线的第四级：反应堆的产出，发电厂的占地。"
+      ],
       "extends": "power3",
       "upgradeOf": "power3",
       "cost": 2200,
@@ -59,11 +112,25 @@
       "power": 500,
       "upgradeCost": 1100,
       "upgradeTime": 60,
-      "requires": ["radar", "reactor"]
+      "requires": [
+        "radar",
+        "reactor"
+      ]
     }
   ],
   "sprites": [
-    { "key": "u.ironworks-hover", "file": "sprites/hover.png", "frames": 1, "rotated": true, "fw": 24, "fh": 26 },
-    { "key": "u.ironworks-bunker", "file": "sprites/bunker.png", "frames": 2, "fps": 2 }
+    {
+      "key": "u.ironworks-hover",
+      "file": "sprites/u.ironworks-hover.png",
+      "frames": 1,
+      "rotated": true,
+      "fw": 24,
+      "fh": 26
+    },
+    {
+      "key": "u.ironworks-bunker",
+      "file": "sprites/u.ironworks-bunker.png",
+      "frames": 1
+    }
   ]
 }

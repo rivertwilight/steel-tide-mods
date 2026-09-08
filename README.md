@@ -9,9 +9,10 @@ with sprite sheets beside it if the author drew some — and every folder under
 - **Play one:** in the game, *Settings → Mods → Official registry → Install*, or
   open `https://play.steelti.de/?mod=<id>`.
 - **Make one:** read the [modding guide](https://steelti.de/wiki/modding) — the
-  whole format, generated from the game's own validator — or hand
-  [`AGENTS.md`](AGENTS.md) to a coding agent. A Rusted Warfare mod can be
-  [converted in the browser](https://steelti.de/mods/convert).
+  whole format, generated from the game's own validator — or give it to a
+  coding agent as a skill: `npx skills add rivertwilight/steel-tide-mods --skill steel-tide-mods-guideline`
+  ([skills.sh](https://skills.sh); the same text is [`AGENTS.md`](AGENTS.md)).
+  A Rusted Warfare mod can be [converted in the browser](https://steelti.de/mods/convert).
 - **Publish one:** fork, add `mods/<id>/`, run the check, open a pull request.
 
 ## Adding a mod
@@ -49,6 +50,8 @@ the mod installed.
 | `tools/pack.mjs` | a mod folder into the single-file form the game's *Upload file…* takes |
 | `tools/steel-tide-mod.mjs` | the game's own mod code — validator, resolver, the vanilla roster — bundled from the game repository; do not edit here |
 | `AGENTS.md` | the brief for a coding agent: the whole format, how to test, how to publish |
+| `skills/steel-tide-mods-guideline/` | the same brief as a skill for `npx skills add` |
+| `mods/<id>/PROMPTS.md` | how a mod's sheets were painted, where they were generated |
 
 ## Licence
 
