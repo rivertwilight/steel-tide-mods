@@ -1,7 +1,7 @@
 {
   "format": "steel-tide-mod-index",
   "v": 1,
-  "generated": "2026-09-08T14:20:27.495Z",
+  "generated": "2026-09-08T14:53:58.446Z",
   "mods": [
     {
       "id": "ironworks",
@@ -18,7 +18,7 @@
       "license": "CC-BY-4.0",
       "path": "mods/ironworks",
       "base": "https://raw.githubusercontent.com/rivertwilight/steel-tide-mods/main/mods/ironworks/",
-      "updated": "2026-09-08T13:47:35+08:00",
+      "updated": "2026-09-08T22:25:05+08:00",
       "defs": [
         {
           "id": "ironworks-hover",
@@ -92,6 +92,183 @@
         {
           "key": "ironworks-pods",
           "file": "sfx/ironworks-pods.mp3"
+        }
+      ]
+    },
+    {
+      "id": "rusted-expansion",
+      "name": [
+        "Rusted Expansion",
+        "铁锈扩展包"
+      ],
+      "version": "1.0.0",
+      "author": "Steel Tide",
+      "description": [
+        "An official tribute to Rusted Warfare: six classic units — Tank, Heavy Tank, Helicopter, Bomber, Gun Boat, Battle Ship — with their names and their numbers brought across as near as the counter web allows.",
+        "向《铁锈战争》致敬的官方模组：坦克、重型坦克、直升机、轰炸机、炮艇、战列舰六个经典单位，名字与数值尽量按原样带过来。"
+      ],
+      "license": "CC-BY-4.0",
+      "homepage": "https://store.steampowered.com/app/370390/Rusted_Warfare__RTS/",
+      "path": "mods/rusted-expansion",
+      "base": "https://raw.githubusercontent.com/rivertwilight/steel-tide-mods/main/mods/rusted-expansion/",
+      "defs": [
+        {
+          "id": "rusted-tank",
+          "kind": "unit",
+          "domain": "ground",
+          "tier": 2,
+          "cost": 280,
+          "name": [
+            "Tank",
+            "坦克"
+          ],
+          "sprite": "u.rusted-tank",
+          "turretSprite": "tur.rusted-tank"
+        },
+        {
+          "id": "rusted-heavy-tank",
+          "kind": "unit",
+          "domain": "ground",
+          "tier": 3,
+          "cost": 640,
+          "name": [
+            "Heavy Tank",
+            "重型坦克"
+          ],
+          "sprite": "u.rusted-heavy-tank",
+          "turretSprite": "tur.rusted-heavy-tank"
+        },
+        {
+          "id": "rusted-helicopter",
+          "kind": "unit",
+          "domain": "air",
+          "tier": 1,
+          "cost": 560,
+          "name": [
+            "Helicopter",
+            "直升机"
+          ],
+          "sprite": "u.rusted-helicopter"
+        },
+        {
+          "id": "rusted-bomber",
+          "kind": "unit",
+          "domain": "air",
+          "tier": 3,
+          "cost": 3200,
+          "name": [
+            "Bomber",
+            "轰炸机"
+          ],
+          "sprite": "u.rusted-bomber"
+        },
+        {
+          "id": "rusted-gun-boat",
+          "kind": "unit",
+          "domain": "ship",
+          "tier": 1,
+          "cost": 240,
+          "name": [
+            "Gun Boat",
+            "炮艇"
+          ],
+          "sprite": "u.rusted-gun-boat",
+          "turretSprite": "tur.rusted-gun-boat"
+        },
+        {
+          "id": "rusted-battle-ship",
+          "kind": "unit",
+          "domain": "ship",
+          "tier": 3,
+          "cost": 1200,
+          "name": [
+            "Battle Ship",
+            "战列舰"
+          ],
+          "sprite": "u.rusted-battle-ship",
+          "turretSprite": "tur.rusted-battle-ship"
+        }
+      ],
+      "sprites": [
+        {
+          "key": "u.rusted-tank",
+          "file": "sprites/u.rusted-tank.png",
+          "frames": 1,
+          "rotated": true,
+          "w": 432,
+          "h": 512
+        },
+        {
+          "key": "tur.rusted-tank",
+          "file": "sprites/tur.rusted-tank.png",
+          "frames": 1,
+          "rotated": true,
+          "w": 271,
+          "h": 512
+        },
+        {
+          "key": "u.rusted-heavy-tank",
+          "file": "sprites/u.rusted-heavy-tank.png",
+          "frames": 1,
+          "rotated": true,
+          "w": 431,
+          "h": 512
+        },
+        {
+          "key": "tur.rusted-heavy-tank",
+          "file": "sprites/tur.rusted-heavy-tank.png",
+          "frames": 1,
+          "rotated": true,
+          "w": 271,
+          "h": 512
+        },
+        {
+          "key": "u.rusted-helicopter",
+          "file": "sprites/u.rusted-helicopter.png",
+          "frames": 1,
+          "rotated": true,
+          "w": 394,
+          "h": 512
+        },
+        {
+          "key": "u.rusted-bomber",
+          "file": "sprites/u.rusted-bomber.png",
+          "frames": 1,
+          "rotated": true,
+          "w": 455,
+          "h": 512
+        },
+        {
+          "key": "u.rusted-gun-boat",
+          "file": "sprites/u.rusted-gun-boat.png",
+          "frames": 1,
+          "rotated": true,
+          "w": 276,
+          "h": 512
+        },
+        {
+          "key": "tur.rusted-gun-boat",
+          "file": "sprites/tur.rusted-gun-boat.png",
+          "frames": 1,
+          "rotated": true,
+          "w": 341,
+          "h": 512
+        },
+        {
+          "key": "u.rusted-battle-ship",
+          "file": "sprites/u.rusted-battle-ship.png",
+          "frames": 1,
+          "rotated": true,
+          "w": 215,
+          "h": 512
+        },
+        {
+          "key": "tur.rusted-battle-ship",
+          "file": "sprites/tur.rusted-battle-ship.png",
+          "frames": 1,
+          "rotated": true,
+          "w": 288,
+          "h": 512
         }
       ]
     }

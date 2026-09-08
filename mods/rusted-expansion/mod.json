@@ -1,0 +1,384 @@
+{
+  "format": "steel-tide-mod",
+  "v": 1,
+  "id": "rusted-expansion",
+  "name": [
+    "Rusted Expansion",
+    "铁锈扩展包"
+  ],
+  "version": "1.0.0",
+  "author": "Steel Tide",
+  "description": [
+    "An official tribute to Rusted Warfare: six classic units — Tank, Heavy Tank, Helicopter, Bomber, Gun Boat, Battle Ship — with their names and their numbers brought across as near as the counter web allows.",
+    "向《铁锈战争》致敬的官方模组：坦克、重型坦克、直升机、轰炸机、炮艇、战列舰六个经典单位，名字与数值尽量按原样带过来。"
+  ],
+  "license": "CC-BY-4.0",
+  "homepage": "https://store.steampowered.com/app/370390/Rusted_Warfare__RTS/",
+  "defs": [
+    {
+      "id": "rusted-tank",
+      "name": [
+        "Tank",
+        "坦克"
+      ],
+      "desc": [
+        "Can attack ground only. Fast, cheap and everywhere — the workhorse of every Rusted Warfare army.",
+        "只能攻击地面目标。快、便宜、到处都是——《铁锈战争》每支军队的主力。"
+      ],
+      "kind": "unit",
+      "domain": "ground",
+      "tier": 2,
+      "cost": 280,
+      "buildTime": 17,
+      "hp": 610,
+      "armor": "medium",
+      "speed": 58,
+      "turnRate": 4.3,
+      "vision": 9,
+      "radius": 11,
+      "fireOnMove": true,
+      "weapons": [
+        {
+          "id": "cannon",
+          "cls": "cannon",
+          "dmg": 40,
+          "reload": 1.25,
+          "range": 4.6,
+          "projectile": "shell",
+          "speed": 480,
+          "targets": [
+            "ground",
+            "ship"
+          ],
+          "turret": true,
+          "muzzleOffset": 20,
+          "splash": 8
+        }
+      ],
+      "aiWeight": 2.5
+    },
+    {
+      "id": "rusted-heavy-tank",
+      "name": [
+        "Heavy Tank",
+        "重型坦克"
+      ],
+      "desc": [
+        "Heavily armed: a big gun for the ground and a light missile for the air. The Tier-2 mainline tank.",
+        "重火力：对地大炮加对空轻型导弹。二级工厂的主战坦克。"
+      ],
+      "kind": "unit",
+      "domain": "ground",
+      "tier": 3,
+      "cost": 640,
+      "buildTime": 30,
+      "hp": 1740,
+      "armor": "heavy",
+      "speed": 42,
+      "turnRate": 3.1,
+      "vision": 9,
+      "radius": 13,
+      "cargoWeight": 2,
+      "requires": [
+        "radar"
+      ],
+      "weapons": [
+        {
+          "id": "gun",
+          "cls": "cannon",
+          "dmg": 80,
+          "reload": 1.17,
+          "range": 5.6,
+          "projectile": "shell",
+          "speed": 384,
+          "targets": [
+            "ground",
+            "ship"
+          ],
+          "turret": true,
+          "muzzleOffset": 24,
+          "splash": 10
+        },
+        {
+          "id": "aamissile",
+          "cls": "aa",
+          "dmg": 80,
+          "reload": 1.17,
+          "range": 5.6,
+          "projectile": "missile",
+          "speed": 480,
+          "targets": [
+            "air"
+          ],
+          "homing": true,
+          "turret": true,
+          "muzzleOffset": 10
+        }
+      ],
+      "aiWeight": 1.5
+    },
+    {
+      "id": "rusted-helicopter",
+      "name": [
+        "Helicopter",
+        "直升机"
+      ],
+      "desc": [
+        "A cheap air harasser that hits ground and air alike — not cost-effective in a straight fight, and never meant to be.",
+        "廉价的空中骚扰单位，对地对空都能打——正面硬拼不划算，本来也不是为此而生。"
+      ],
+      "kind": "unit",
+      "domain": "air",
+      "tier": 1,
+      "cost": 560,
+      "buildTime": 28,
+      "hp": 435,
+      "armor": "air",
+      "speed": 95,
+      "turnRate": 6.3,
+      "vision": 9,
+      "radius": 9,
+      "altitude": 11,
+      "hovers": true,
+      "weapons": [
+        {
+          "id": "gun",
+          "cls": "autocannon",
+          "dmg": 27,
+          "reload": 1,
+          "range": 4.6,
+          "projectile": "bullet",
+          "speed": 600,
+          "targets": [
+            "ground",
+            "ship",
+            "air"
+          ],
+          "muzzleOffset": 8
+        }
+      ],
+      "aiWeight": 1.5
+    },
+    {
+      "id": "rusted-bomber",
+      "name": [
+        "Bomber",
+        "轰炸机"
+      ],
+      "desc": [
+        "Very heavily armoured but slow. Drops three bombs, then needs a long while to rearm.",
+        "装甲极厚但很慢。投下三枚炸弹后要很久才能再装填。"
+      ],
+      "kind": "unit",
+      "domain": "air",
+      "tier": 3,
+      "cost": 3200,
+      "buildTime": 120,
+      "hp": 3000,
+      "armor": "air",
+      "speed": 45,
+      "turnRate": 1.26,
+      "vision": 9,
+      "radius": 14,
+      "altitude": 16,
+      "requires": [
+        "radar"
+      ],
+      "cargoWeight": 4,
+      "weapons": [
+        {
+          "id": "bombs",
+          "cls": "he",
+          "dmg": 590,
+          "reload": 12,
+          "range": 2,
+          "projectile": "bomb",
+          "speed": 120,
+          "targets": [
+            "ground",
+            "ship"
+          ],
+          "burst": 3,
+          "burstDelay": 0.5,
+          "splash": 100,
+          "spread": 16
+        }
+      ],
+      "aiWeight": 0.5
+    },
+    {
+      "id": "rusted-gun-boat",
+      "name": [
+        "Gun Boat",
+        "炮艇"
+      ],
+      "desc": [
+        "Fast, cheap, and can attack ground. The first thing out of the sea factory and the last thing a shore battery sees.",
+        "快、便宜、能打地面。造船厂出的第一艘船，也是岸炮最后看到的东西。"
+      ],
+      "kind": "unit",
+      "domain": "ship",
+      "tier": 1,
+      "cost": 240,
+      "buildTime": 7,
+      "hp": 490,
+      "armor": "ship",
+      "speed": 79,
+      "turnRate": 2.9,
+      "vision": 9,
+      "radius": 9,
+      "trail": "wake",
+      "weapons": [
+        {
+          "id": "gun",
+          "cls": "autocannon",
+          "dmg": 19,
+          "reload": 1,
+          "range": 4.2,
+          "projectile": "bullet",
+          "speed": 600,
+          "targets": [
+            "ground",
+            "ship"
+          ],
+          "turret": true,
+          "muzzleOffset": 8
+        }
+      ],
+      "aiWeight": 1.4
+    },
+    {
+      "id": "rusted-battle-ship",
+      "name": [
+        "Battle Ship",
+        "战列舰"
+      ],
+      "desc": [
+        "Medium-range land attack and a lot of steel. No anti-air, no anti-sub — bring an escort.",
+        "中程对地火力和一大堆钢铁。没有防空，没有反潜——带上护卫。"
+      ],
+      "kind": "unit",
+      "domain": "ship",
+      "tier": 3,
+      "cost": 1200,
+      "buildTime": 33,
+      "hp": 3480,
+      "armor": "ship",
+      "speed": 42,
+      "turnRate": 1.9,
+      "vision": 10,
+      "radius": 18,
+      "trail": "wake",
+      "requires": [
+        "radar"
+      ],
+      "weapons": [
+        {
+          "id": "guns",
+          "cls": "navgun",
+          "dmg": 104,
+          "reload": 2,
+          "range": 8.4,
+          "projectile": "shell",
+          "speed": 384,
+          "targets": [
+            "ground",
+            "ship"
+          ],
+          "turret": true,
+          "muzzleOffset": 18,
+          "burst": 2,
+          "burstDelay": 0.4,
+          "splash": 12
+        }
+      ],
+      "aiWeight": 0.8
+    }
+  ],
+  "sprites": [
+    {
+      "key": "u.rusted-tank",
+      "file": "sprites/u.rusted-tank.png",
+      "frames": 1,
+      "rotated": true,
+      "fw": 22,
+      "fh": 26
+    },
+    {
+      "key": "tur.rusted-tank",
+      "file": "sprites/tur.rusted-tank.png",
+      "frames": 1,
+      "rotated": true,
+      "fw": 18,
+      "fh": 34,
+      "pivotY": 0.72
+    },
+    {
+      "key": "u.rusted-heavy-tank",
+      "file": "sprites/u.rusted-heavy-tank.png",
+      "frames": 1,
+      "rotated": true,
+      "fw": 26,
+      "fh": 32
+    },
+    {
+      "key": "tur.rusted-heavy-tank",
+      "file": "sprites/tur.rusted-heavy-tank.png",
+      "frames": 1,
+      "rotated": true,
+      "fw": 22,
+      "fh": 40,
+      "pivotY": 0.7
+    },
+    {
+      "key": "u.rusted-helicopter",
+      "file": "sprites/u.rusted-helicopter.png",
+      "frames": 1,
+      "rotated": true,
+      "fw": 20,
+      "fh": 26
+    },
+    {
+      "key": "u.rusted-bomber",
+      "file": "sprites/u.rusted-bomber.png",
+      "frames": 1,
+      "rotated": true,
+      "fw": 30,
+      "fh": 34
+    },
+    {
+      "key": "u.rusted-gun-boat",
+      "file": "sprites/u.rusted-gun-boat.png",
+      "frames": 1,
+      "rotated": true,
+      "fw": 14,
+      "fh": 26
+    },
+    {
+      "key": "tur.rusted-gun-boat",
+      "file": "sprites/tur.rusted-gun-boat.png",
+      "frames": 1,
+      "rotated": true,
+      "fw": 10,
+      "fh": 16,
+      "pivotY": 0.66
+    },
+    {
+      "key": "u.rusted-battle-ship",
+      "file": "sprites/u.rusted-battle-ship.png",
+      "frames": 1,
+      "rotated": true,
+      "fw": 26,
+      "fh": 62
+    },
+    {
+      "key": "tur.rusted-battle-ship",
+      "file": "sprites/tur.rusted-battle-ship.png",
+      "frames": 1,
+      "rotated": true,
+      "fw": 18,
+      "fh": 32,
+      "pivotY": 0.7
+    }
+  ]
+}
