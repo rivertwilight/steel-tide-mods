@@ -1,7 +1,7 @@
 {
   "format": "steel-tide-mod-index",
   "v": 1,
-  "generated": "2026-09-08T05:46:27.784Z",
+  "generated": "2026-09-08T05:48:03.570Z",
   "mods": [
     {
       "id": "bison-ii",
@@ -18,7 +18,7 @@
       "license": "CC-BY-4.0",
       "path": "mods/bison-ii",
       "base": "https://raw.githubusercontent.com/rivertwilight/steel-tide-mods/main/mods/bison-ii/",
-      "updated": "2026-09-08T12:34:52+08:00",
+      "updated": "2026-09-08T13:47:35+08:00",
       "defs": [
         {
           "id": "bison2",
@@ -69,7 +69,7 @@
       "license": "CC-BY-4.0",
       "path": "mods/ironworks",
       "base": "https://raw.githubusercontent.com/rivertwilight/steel-tide-mods/main/mods/ironworks/",
-      "updated": "2026-09-08T12:34:52+08:00",
+      "updated": "2026-09-08T13:47:35+08:00",
       "defs": [
         {
           "id": "ironworks-hover",
