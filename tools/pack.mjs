@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Pack a mod folder into the single-file form the game's "Upload file…"
- * takes — mod.json with every sheet embedded as a data URL:
+ * takes — mod.json with every sheet and sound embedded as a data URL:
  *
  *   node tools/pack.mjs mods/my-mod [out.steel-tide-mod]
  *
@@ -24,12 +24,12 @@ if (!parsed.ok) {
   for (const e of parsed.errors) console.error(`✗ ${e.path}: ${e.message}`);
   process.exit(1);
 }
-const MIME = { '.png': 'image/png', '.webp': 'image/webp', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg' };
+const MIME = { '.png': 'image/png', '.webp': 'image/webp', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.mp3': 'audio/mpeg', '.wav': 'audio/wav', '.ogg': 'audio/ogg' };
 const files = {};
-for (const sheet of parsed.mod.sprites ?? []) {
-  const bytes = readFileSync(join(folder, sheet.file));
-  const mime = MIME[extname(sheet.file).toLowerCase()] ?? 'application/octet-stream';
-  files[sheet.file] = `data:${mime};base64,${bytes.toString('base64')}`;
+for (const { file } of [...(parsed.mod.sprites ?? []), ...(parsed.mod.sounds ?? [])]) {
+  const bytes = readFileSync(join(folder, file));
+  const mime = MIME[extname(file).toLowerCase()] ?? 'application/octet-stream';
+  files[file] = `data:${mime};base64,${bytes.toString('base64')}`;
 }
 const out = outArg ? resolve(outArg) : resolve(here, '..', 'dist', `${basename(folder)}${MOD_FILE_EXT}`);
 mkdirSync(dirname(out), { recursive: true });

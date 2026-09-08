@@ -231,7 +231,8 @@ Anything not in these tables is ignored with a warning. Numbers outside the stat
 | `minGame` | string |  |  | the oldest game version it is written for |
 | `defs` | def[] | yes |  | the units, buildings and upgrade levels |
 | `sprites` | sheet[] |  |  | the sheets the defs draw with (see below) |
-| `files` | { path: dataURL } |  |  | single-file form only: the sheets, embedded as data URLs by path |
+| `sounds` | string |  |  | the recordings the weapons fire with (see below) |
+| `files` | { path: dataURL } |  |  | single-file form only: the sheets and sounds, embedded as data URLs by path |
 
 `name`, `description` and every `desc`/`name` on a def are *text*: a string (used for both languages), `["English", "中文"]`, or `{ "en": "…", "zh": "…" }`.
 
@@ -324,7 +325,7 @@ An `upgradeOf` def becomes upgrade-only (never placed directly): the named build
 | `muzzleOffset` | number 0–200 |  |  | pivot to muzzle, world px |
 | `spread` | number 0–200 |  |  | inaccuracy at full range, world px |
 | `friendlyFire` | boolean |  |  | the blast hurts your own side too |
-| `sound` | mg \| autocannon \| cannon \| missile \| flak \| arty \| rocket \| torpedo \| bomb |  | by class | the firing sound |
+| `sound` | string |  | by class | the firing sound: mg, autocannon, cannon, missile, flak, arty, rocket, torpedo, bomb, or the key of one of this mod's `sounds` |
 
 The damage a weapon does is `dmg × the armour matrix cell for (cls, target armour)`, with `mult` overriding single cells. The matrix:
 
@@ -366,6 +367,15 @@ aa          air ×1
 | `bgMinLuma` | number 0–255 |  |  | lightest colour still taken as background |
 | `artifactCleanup` | boolean |  |  | sweep specks left by background removal |
 
+### A sound (`sounds[]`)
+
+| field | type | required | default | meaning |
+| --- | --- | --- | --- | --- |
+| `key` | string | yes |  | `<mod id>-<name>`, lower case; what a weapon's `sound` names |
+| `file` | string | yes |  | the recording, relative to mod.json — an MP3 plays everywhere; WAV works, OGG not on Safari. Dry, close, under a second |
+
+A weapon fires with the game's sound for its class unless its `sound` names one of these keys. A recording is a dry, close-miked one-shot under a second with no reverb tail — the engine attenuates and pans it by distance and forty overlapping echoes turn to mud. Mono MP3 is the safe format.
+
 ## Units of measure
 
 - A tile is 32 world pixels. `speed` and projectile `speed` are world px/s; `range`, `minRange`, `vision`, `sonar`, `stealth`, `detect`, `repairRange` and `interceptRange` are tiles; `radius`, `splash`, `spread`, `muzzleOffset` are world px.
@@ -378,6 +388,7 @@ aa          air ×1
 - A sheet is one PNG (WebP and JPEG are accepted): `frames` animation frames left to right in one horizontal strip, evenly spaced, no gaps, no borders.
 - Hulls, turrets and everything that turns: draw ONE image facing UP and set `"rotated": true`; the game bakes the 24 headings. `fw`/`fh` are the in-game size of that up-facing image in world px (a tank hull is about 24×24; the image itself may be any resolution, 2–4× is best). `pivotX`/`pivotY` put the pivot on the turret ring (default centre).
 - Buildings: one strip of frames, not rotated, drawn with a slight top-down southern tilt. The footprint is the bottom `fw×32` by `fh×32` px of the frame; anything above overhangs the terrain behind (towers, masts). Width, height and anchor are sized from the def's footprint automatically.
+- A building with a gun that turns is two sheets like a hull and turret: the body with an empty ring and `"mount": [fx, fy]` saying where the ring sits as fractions of the frame, and a `tur.<id>` sheet for the gun; its weapons carry `"turret": true`.
 - Faction colour: paint team-coloured parts in pure magenta — highlight #FF66FF, base #FF00FF, shadow #990099 — and use magenta nowhere else; the game recolours it per player.
 - Style: crisp pixel art, hard edges, no anti-aliasing, a muted military palette (DawnBringer-32), dark #222034 outlines. Generated sheets are cleaned automatically (background removal, frame registration), but a transparent background is best.
 

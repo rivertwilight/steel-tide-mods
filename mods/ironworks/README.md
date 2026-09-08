@@ -1,15 +1,19 @@
 # Ironworks
 
-One of each thing a mod can add, with its own art:
+One of each thing a mod can add, with its own art and sound:
 
 - **Skimmer Hover Tank** — a fresh unit (no `extends`), drawn from
   `sprites/u.ironworks-hover.png`: one up-facing image the game bakes into
-  24 headings. The rocket pods are part of the hull, so there is no turret.
-- **Bunker** — a defended building drawn from a single top-down frame,
-  `sprites/u.ironworks-bunker.png`, sized to its 2×2 footprint by the game
-  and placed by the engineer.
+  24 headings. The rocket pods are part of the hull, so there is no turret;
+  they fire with the mod's own recording, `sfx/ironworks-pods.mp3`.
+- **Bunker** — a turreted building, two sheets like a tank: the pit
+  (`sprites/u.ironworks-bunker.png`, with `mount` saying where its ring
+  sits) and the twin autocannon that turns on it
+  (`sprites/tur.ironworks-bunker.png`). Its gun carries `"turret": true` and
+  its own sound. Placed by the engineer, sized to its 2×2 footprint.
 - **Fusion Plant** — a fourth level for the power plant line: `power3` gains
   an Upgrade button that turns it into this def. It keeps the plant's art.
 
 The faction colour in every sheet is magenta; the game recolours it per
-player. `PROMPTS.md` is how the sheets were painted.
+player. `PROMPTS.md` is how the sheets were painted and `SFX-PROMPTS.md` how
+the sounds were recorded.

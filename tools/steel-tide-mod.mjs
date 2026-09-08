@@ -2098,6 +2098,32 @@ const STRINGS = {
   "setup.rules": ["Game config", "对局设置"],
   "setup.startMetal": ["Starting metal", "初始金属"],
   "setup.fog": ["Fog of war", "战争迷雾"],
+  // ---- weather. The name is a word, the sentence beneath it is the whole
+  // rule: what it takes off sight, and what it takes off speed.
+  "setup.weather": ["Weather", "天气"],
+  "weather.clear": ["Clear", "晴朗"],
+  "weather.rain": ["Rain", "雨天"],
+  "weather.snow": ["Snow", "雪天"],
+  "weather.random": ["Random", "随机"],
+  "weather.clear.desc": ["Open sky. Every unit sees and moves as it was built to.", "天朗气清。所有单位的视野和速度都是本来的样子。"],
+  "weather.rain.desc": [
+    "Sight down 25% and everything on the ground 15% slower. Aircraft fly above it.",
+    "视野下降 25%，地面与水面单位慢 15%。飞机在雨层之上，不受影响。"
+  ],
+  "weather.snow.desc": [
+    "You see it coming as clearly as ever — and everything on the ground crawls, 25% slower. Aircraft fly above it.",
+    "你照样看得一清二楚——但地面与水面单位慢了 25%，救援总是迟一步。飞机在雪层之上，不受影响。"
+  ],
+  "weather.random.desc": [
+    "The sky will not settle: the match opens clear and turns every few minutes, and you are told each time it does.",
+    "天气不会一成不变：开局晴朗，之后每隔几分钟变换一次，每次变换都会通报。"
+  ],
+  "alert.weather": ["The weather is turning: {0}", "天气转变：{0}"],
+  "setup.dayNight": ["Day and night", "昼夜循环"],
+  "setup.dayNightTip": [
+    "The sun turns: 24 minutes to the full cycle, starting at dawn. At the bottom of the night every unit sees 40% less — the radar excepted, and the weather stacks on top. Turned off, the match is played in unending daylight.",
+    "太阳会转：一个完整昼夜 24 分钟，从黎明开局。夜最深时所有单位视野缩减 40%（雷达站除外），并与天气叠加。关闭后全场保持白昼。"
+  ],
   "setup.popCap": ["Unit cap", "人口上限"],
   "setup.you": ["You", "你"],
   "setup.seat": ["Your faction — it decides which spawn you start from.", "你的阵营——决定你从哪个出生点开局。"],
@@ -2378,9 +2404,9 @@ const STRINGS = {
   "hud.nukeFabricating": ["Fabricating warhead — click to cancel", "正在制造核弹头 — 点击取消"],
   "hud.nukeEmpty": ["Empty warhead slot", "空核弹槽位"],
   "hud.watchHint": ["Select a faction's HQ to watch its economy", "选择某阵营的指挥中心以查看其经济"],
-  "hud.tab.map": ["Map", "地图"],
+  "hud.tab.map": ["Overview", "总览"],
   "hud.battleMap": ["Battle map", "战场地图"],
-  "hud.tab.command": ["Command", "指挥"],
+  "hud.tab.command": ["Unit", "单位"],
   "hud.chat": ["Chat", "聊天"],
   "hud.chatEmpty": ["Press Enter to say something.", "按 Enter 发言。"],
   "hud.chatPlaceholder": ["Message… (/t = team)", "输入消息…（/t = 队伍）"],
@@ -2508,7 +2534,6 @@ const STRINGS = {
   "mods.title": ["Mods", "模组"],
   "mods.pending": ["Changes take effect after this match.", "更改将在本场结束后生效。"],
   "mods.installed": ["Installed", "已安装"],
-  "mods.adds": ["{0} units, {1} buildings", "{0} 个单位，{1} 座建筑"],
   "mods.by": ["by {0}", "作者：{0}"],
   "mods.source.registry": ["from the registry", "来自官方仓库"],
   "mods.source.url": ["from {0}", "来自 {0}"],
@@ -2542,7 +2567,7 @@ const STRINGS = {
   "mods.add.url": ["Add from URL…", "从网址添加…"],
   "mods.add.urlPrompt": ["The address of a mod folder (where mod.json is) or of a .steel-tide-mod file", "模组文件夹（mod.json 所在处）或 .steel-tide-mod 文件的网址"],
   "mods.add.guide": ["How to make one", "如何制作"],
-  "mods.installed.toast": ["{0} installed: {1}", "已安装 {0}：{1}"],
+  "mods.installed.toast": ["{0} installed", "已安装 {0}"],
   "mods.updated.toast": ["{0} reloaded", "已重新读取 {0}"],
   "mods.error.title": ["The mod could not be loaded", "模组无法加载"],
   "mods.warnings": ["Notes", "提示"],
@@ -2984,6 +3009,8 @@ function modRegistryBase(id) {
 }
 const MAX_MOD_DEFS = 200;
 const MAX_MOD_SPRITES = 120;
+const MAX_MOD_SOUNDS = 60;
+const SOUND_KEY_RE = /^[a-z0-9][a-z0-9-]{1,59}$/;
 const MAX_MANIFEST_BYTES = 1024 * 1024;
 const MAX_MOD_FILES_BYTES = 24 * 1024 * 1024;
 const ID_RE = /^[a-z0-9][a-z0-9_-]{1,39}$/;
@@ -3009,7 +3036,8 @@ const MANIFEST_SPECS = [
   { name: "minGame", type: "string", max: 32, doc: ["the oldest game version it is written for", "所需的最低游戏版本"] },
   { name: "defs", type: "defs", required: true, doc: ["the units, buildings and upgrade levels", "单位、建筑与升级等级"] },
   { name: "sprites", type: "sprites", doc: ["the sheets the defs draw with (see below)", "各定义使用的精灵图（见下）"] },
-  { name: "files", type: "files", doc: ["single-file form only: the sheets, embedded as data URLs by path", "仅单文件形式：按路径内嵌的图片（data URL）"] }
+  { name: "sounds", type: "sounds", doc: ["the recordings the weapons fire with (see below)", "武器开火时播放的录音（见下）"] },
+  { name: "files", type: "files", doc: ["single-file form only: the sheets and sounds, embedded as data URLs by path", "仅单文件形式：按路径内嵌的图片与音频（data URL）"] }
 ];
 const DEF_SPECS = [
   { name: "id", type: "id", required: true, doc: ["unique across every mod and the vanilla roster; prefix a generic word with your mod's id", "在所有模组和原版中唯一；通用名字前加上模组 id 前缀"] },
@@ -3090,7 +3118,11 @@ const WEAPON_SPECS = [
   { name: "muzzleOffset", type: "number", min: 0, max: 200, doc: ["pivot to muzzle, world px", "枢轴到炮口距离（世界像素）"] },
   { name: "spread", type: "number", min: 0, max: 200, doc: ["inaccuracy at full range, world px", "最大射程处的散布（世界像素）"] },
   { name: "friendlyFire", type: "bool", doc: ["the blast hurts your own side too", "溅射也会伤及己方"] },
-  { name: "sound", type: "enum", values: WEAPON_SOUNDS, def: "by class", doc: ["the firing sound", "开火音效"] }
+  { name: "sound", type: "string", max: 64, def: "by class", doc: [`the firing sound: ${WEAPON_SOUNDS.join(", ")}, or the key of one of this mod's \`sounds\``, `开火音效：${WEAPON_SOUNDS.join("、")}，或本模组 \`sounds\` 中的一个键`] }
+];
+const SOUND_SPECS = [
+  { name: "key", type: "string", max: 60, required: true, doc: ["`<mod id>-<name>`, lower case; what a weapon's `sound` names", "`<模组 id>-<名字>`，小写；武器 `sound` 引用的键"] },
+  { name: "file", type: "string", max: 120, required: true, doc: ["the recording, relative to mod.json — an MP3 plays everywhere; WAV works, OGG not on Safari. Dry, close, under a second", "录音路径，相对 mod.json——MP3 处处可播；WAV 可用，OGG 在 Safari 上不行。干声、近距、一秒以内"] }
 ];
 const SPRITE_SPECS = [
   { name: "key", type: "string", max: 48, required: true, doc: ["`u.<id>` for a body, `tur.<id>` for a rotating part; never a vanilla key", "主体用 `u.<id>`，旋转部件用 `tur.<id>`；不可与原版键重名"] },
@@ -3114,7 +3146,7 @@ const SPRITE_SPECS = [
   { name: "bgMinLuma", type: "number", min: 0, max: 255, doc: ["lightest colour still taken as background", "仍视为背景的最亮颜色"] },
   { name: "artifactCleanup", type: "bool", doc: ["sweep specks left by background removal", "清理背景去除后的杂点"] }
 ];
-const FIELD_SPECS = { manifest: MANIFEST_SPECS, def: DEF_SPECS, weapon: WEAPON_SPECS, sprite: SPRITE_SPECS };
+const FIELD_SPECS = { manifest: MANIFEST_SPECS, def: DEF_SPECS, weapon: WEAPON_SPECS, sprite: SPRITE_SPECS, sound: SOUND_SPECS };
 function cloneTable(table) {
   return structuredClone(table);
 }
@@ -3271,6 +3303,7 @@ function checkField(spec, value, path, issues) {
     case "weapons":
     case "defs":
     case "sprites":
+    case "sounds":
       return Array.isArray(value) || bad("must be a list");
     case "files":
       return isPlainObject(value) || bad("must be an object of path → data URL");
@@ -3319,6 +3352,8 @@ function parseMod(input) {
   if (defs.length > MAX_MOD_DEFS) errors.push({ path: "mod.defs", message: `at most ${MAX_MOD_DEFS} defs` });
   const sprites = head.sprites ?? [];
   if (sprites.length > MAX_MOD_SPRITES) errors.push({ path: "mod.sprites", message: `at most ${MAX_MOD_SPRITES} sheets` });
+  const sounds = head.sounds ?? [];
+  if (sounds.length > MAX_MOD_SOUNDS) errors.push({ path: "mod.sounds", message: `at most ${MAX_MOD_SOUNDS} sounds` });
   if (errors.length > 0) return { ok: false, errors, warnings };
   const files = head.files;
   if (files) {
@@ -3330,6 +3365,7 @@ function parseMod(input) {
     ...head,
     defs,
     sprites,
+    sounds,
     ...files ? { files } : {}
   };
   const resolved = resolveMod(mod, VANILLA);
@@ -3378,6 +3414,33 @@ function resolveMod(mod, table = VANILLA) {
     cleanSprites.push({ ...clean, frames: clean.frames ?? 1 });
   });
   mod.sprites = cleanSprites;
+  const soundKeys = /* @__PURE__ */ new Set();
+  const cleanSounds = [];
+  (mod.sounds ?? []).forEach((raw, i) => {
+    const path = `sounds[${i}]`;
+    if (!isPlainObject(raw)) {
+      errors.push({ path, message: "must be an object" });
+      return;
+    }
+    const clean = checkObject(raw, SOUND_SPECS, path, errors, warnings);
+    if (typeof clean.key !== "string" || typeof clean.file !== "string") return;
+    if (!SOUND_KEY_RE.test(clean.key) || !clean.key.startsWith(`${mod.id}-`)) {
+      errors.push({ path: `${path}.key`, message: `must be "${mod.id}-<name>", lower case` });
+      return;
+    }
+    if (!FILE_RE.test(clean.file)) {
+      errors.push({ path: `${path}.file`, message: "must be a relative path inside the mod" });
+      return;
+    }
+    if (soundKeys.has(clean.key)) {
+      errors.push({ path: `${path}.key`, message: `"${clean.key}" is listed twice` });
+      return;
+    }
+    if (mod.files && !(clean.file in mod.files)) errors.push({ path: `${path}.file`, message: `"${clean.file}" is not among the embedded files` });
+    soundKeys.add(clean.key);
+    cleanSounds.push({ key: clean.key, file: clean.file });
+  });
+  mod.sounds = cleanSounds;
   mod.defs.forEach((raw, i) => {
     const path = `defs[${i}]`;
     if (!isPlainObject(raw)) {
@@ -3426,7 +3489,7 @@ function resolveMod(mod, table = VANILLA) {
     const own = clean;
     if (own.name === void 0) return;
     if (own.kind === void 0) own.kind = kind;
-    const def = buildDef(own, kind, base, mod.id, path, errors, warnings);
+    const def = buildDef(own, kind, base, mod.id, soundKeys, path, errors, warnings);
     if (!def) return;
     const ownSheet = sheetKeys.has(`u.${id}`);
     const bodyKey = own.sprite ?? (ownSheet ? `u.${id}` : base?.sprite ?? `u.${id}`);
@@ -3524,7 +3587,7 @@ function resolveMod(mod, table = VANILLA) {
   });
   return { ok: errors.length === 0, mod, defs, patches, strings, placeholders, errors, warnings };
 }
-function buildDef(own, kind, base, modId, path, errors, warnings) {
+function buildDef(own, kind, base, modId, soundKeys, path, errors, warnings) {
   const inherited = base ? structuredClone(base) : {};
   delete inherited.id;
   delete inherited.aliases;
@@ -3586,6 +3649,10 @@ function buildDef(own, kind, base, modId, path, errors, warnings) {
     }
     const clean = checkObject(raw, WEAPON_SPECS, wpath, errors, warnings);
     if (!clean.cls || clean.dmg === void 0 || clean.reload === void 0 || clean.range === void 0) return;
+    if (clean.sound !== void 0 && !WEAPON_SOUNDS.includes(clean.sound) && !soundKeys.has(clean.sound)) {
+      errors.push({ path: `${wpath}.sound`, message: `"${clean.sound}" is neither a game sound (${WEAPON_SOUNDS.join(", ")}) nor one of this mod's sounds` });
+      return;
+    }
     const projectile = clean.projectile ?? PROJECTILE_BY_CLASS[clean.cls];
     const wp = {
       ...clean,
@@ -3725,7 +3792,8 @@ function indexEntryFor(mod, path, base, sizes = {}, updated) {
       frames: s.frames ?? 1,
       ...s.rotated ? { rotated: true } : {},
       ...sizes[s.file] ? { w: sizes[s.file].w, h: sizes[s.file].h } : {}
-    }))
+    })),
+    ...mod.sounds?.length ? { sounds: mod.sounds.map((s) => ({ key: s.key, file: s.file })) } : {}
   };
 }
 function parseModIndex(json) {
@@ -3754,7 +3822,8 @@ function parseModIndex(json) {
       base: m.base,
       ...typeof m.updated === "string" ? { updated: m.updated } : {},
       defs: Array.isArray(m.defs) ? m.defs.filter((d) => isPlainObject(d) && typeof d.id === "string") : [],
-      sprites: Array.isArray(m.sprites) ? m.sprites.filter((s) => isPlainObject(s) && typeof s.key === "string") : []
+      sprites: Array.isArray(m.sprites) ? m.sprites.filter((s) => isPlainObject(s) && typeof s.key === "string") : [],
+      ...Array.isArray(m.sounds) ? { sounds: m.sounds.filter((s) => isPlainObject(s) && typeof s.key === "string" && typeof s.file === "string") } : {}
     });
   }
   return { format: "steel-tide-mod-index", v: 1, generated: typeof raw.generated === "string" ? raw.generated : "", mods };
@@ -3984,6 +4053,12 @@ function agentPrompt() {
   p();
   p(markdownTable(fieldRows("sprite")));
   p();
+  p("### A sound (`sounds[]`)");
+  p();
+  p(markdownTable(fieldRows("sound")));
+  p();
+  p("A weapon fires with the game's sound for its class unless its `sound` names one of these keys. A recording is a dry, close-miked one-shot under a second with no reverb tail — the engine attenuates and pans it by distance and forty overlapping echoes turn to mud. Mono MP3 is the safe format.");
+  p();
   p("## Units of measure");
   p();
   p("- A tile is 32 world pixels. `speed` and projectile `speed` are world px/s; `range`, `minRange`, `vision`, `sonar`, `stealth`, `detect`, `repairRange` and `interceptRange` are tiles; `radius`, `splash`, `spread`, `muzzleOffset` are world px.");
@@ -3996,6 +4071,7 @@ function agentPrompt() {
   p("- A sheet is one PNG (WebP and JPEG are accepted): `frames` animation frames left to right in one horizontal strip, evenly spaced, no gaps, no borders.");
   p('- Hulls, turrets and everything that turns: draw ONE image facing UP and set `"rotated": true`; the game bakes the 24 headings. `fw`/`fh` are the in-game size of that up-facing image in world px (a tank hull is about 24×24; the image itself may be any resolution, 2–4× is best). `pivotX`/`pivotY` put the pivot on the turret ring (default centre).');
   p("- Buildings: one strip of frames, not rotated, drawn with a slight top-down southern tilt. The footprint is the bottom `fw×32` by `fh×32` px of the frame; anything above overhangs the terrain behind (towers, masts). Width, height and anchor are sized from the def's footprint automatically.");
+  p('- A building with a gun that turns is two sheets like a hull and turret: the body with an empty ring and `"mount": [fx, fy]` saying where the ring sits as fractions of the frame, and a `tur.<id>` sheet for the gun; its weapons carry `"turret": true`.');
   p("- Faction colour: paint team-coloured parts in pure magenta — highlight #FF66FF, base #FF00FF, shadow #990099 — and use magenta nowhere else; the game recolours it per player.");
   p("- Style: crisp pixel art, hard edges, no anti-aliasing, a muted military palette (DawnBringer-32), dark #222034 outlines. Generated sheets are cleaned automatically (background removal, frame registration), but a transparent background is best.");
   p();
@@ -4040,6 +4116,7 @@ export {
   MAX_MANIFEST_BYTES,
   MAX_MOD_DEFS,
   MAX_MOD_FILES_BYTES,
+  MAX_MOD_SOUNDS,
   MAX_MOD_SPRITES,
   MOD_FILE_EXT,
   MOD_FORMAT,
@@ -4050,6 +4127,7 @@ export {
   MOD_REGISTRY_WEB,
   PROJECTILES,
   REGISTRY,
+  SOUND_KEY_RE,
   TARGET_DOMAINS,
   TRAILS,
   UNIT_DOMAINS,

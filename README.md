@@ -21,6 +21,7 @@ with sprite sheets beside it if the author drew some — and every folder under
 mods/<id>/
   mod.json        the manifest — `id` must equal the folder name
   sprites/*.png   the sheets it names, if any
+  sfx/*.mp3       the recordings it names, if any
   README.md       a few lines on what it is (shown nowhere yet, read by people)
 ```
 
@@ -43,7 +44,7 @@ the mod installed.
 
 | Path | What |
 | --- | --- |
-| `mods/<id>/` | one mod each; `mods/bison-ii` is the smallest possible one, `mods/ironworks` has its own art, a building and an upgrade level |
+| `mods/<id>/` | one mod each; `mods/ironworks` has its own art and sounds, a turreted building and an upgrade level; `mods/rusted-expansion` is the official Rusted Warfare tribute |
 | `index.json` | what the game and the website read — generated, never edited by hand |
 | `tools/check.mjs` | validate one mod or all of them |
 | `tools/build-index.mjs` | rebuild `index.json` (CI does this on `main`) |
@@ -51,7 +52,7 @@ the mod installed.
 | `tools/steel-tide-mod.mjs` | the game's own mod code — validator, resolver, the vanilla roster — bundled from the game repository; do not edit here |
 | `AGENTS.md` | the brief for a coding agent: the whole format, how to test, how to publish |
 | `skills/steel-tide-mods-guideline/` | the same brief as a skill for `npx skills add` |
-| `mods/<id>/PROMPTS.md` | how a mod's sheets were painted, where they were generated |
+| `mods/<id>/PROMPTS.md`, `SFX-PROMPTS.md` | how a mod's sheets were painted and its sounds recorded, where they were generated |
 
 ## Licence
 

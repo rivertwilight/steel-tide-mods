@@ -6,11 +6,11 @@
     "Ironworks",
     "铁工厂"
   ],
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "Steel Tide",
   "description": [
-    "A hover tank with its own art, a bunker, and a fourth level for the power plant line — one of each thing a mod can add.",
-    "一辆自带图像的悬浮坦克、一座碉堡和发电厂线的第四级——模组能加的每种东西各一个。"
+    "A hover tank with its own art and sound, a turreted bunker, and a fourth level for the power plant line — one of each thing a mod can add.",
+    "一辆自带图像和音效的悬浮坦克、一座带旋转炮塔的碉堡，以及发电厂线的第四级——模组能加的每种东西各一个。"
   ],
   "license": "CC-BY-4.0",
   "defs": [
@@ -48,7 +48,8 @@
           "burstDelay": 0.1,
           "splash": 10,
           "spread": 14,
-          "muzzleOffset": 10
+          "muzzleOffset": 10,
+          "sound": "ironworks-pods"
         }
       ],
       "producedBy": [
@@ -64,8 +65,8 @@
         "碉堡"
       ],
       "desc": [
-        "A concrete gun pit that takes a beating and holds a line.",
-        "扛打的混凝土火力点，守得住一条线。"
+        "A concrete gun pit with a twin autocannon that turns to meet whatever comes.",
+        "带双管机炮的混凝土火力点，炮口随来敌转动。"
       ],
       "kind": "building",
       "tier": 1,
@@ -87,11 +88,14 @@
             "ground",
             "ship"
           ],
-          "turret": false,
-          "muzzleOffset": 20,
+          "turret": true,
+          "muzzleOffset": 27,
+          "burst": 2,
+          "burstDelay": 0.08,
           "mult": {
             "structure": 0.4
-          }
+          },
+          "sound": "ironworks-autocannon"
         }
       ]
     },
@@ -130,7 +134,30 @@
     {
       "key": "u.ironworks-bunker",
       "file": "sprites/u.ironworks-bunker.png",
-      "frames": 1
+      "frames": 1,
+      "mount": [
+        0.5,
+        0.545
+      ]
+    },
+    {
+      "key": "tur.ironworks-bunker",
+      "file": "sprites/tur.ironworks-bunker.png",
+      "frames": 1,
+      "rotated": true,
+      "fw": 26,
+      "fh": 42,
+      "pivotY": 0.66
+    }
+  ],
+  "sounds": [
+    {
+      "key": "ironworks-autocannon",
+      "file": "sfx/ironworks-autocannon.mp3"
+    },
+    {
+      "key": "ironworks-pods",
+      "file": "sfx/ironworks-pods.mp3"
     }
   ]
 }

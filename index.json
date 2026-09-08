@@ -1,70 +1,19 @@
 {
   "format": "steel-tide-mod-index",
   "v": 1,
-  "generated": "2026-09-08T05:48:03.570Z",
+  "generated": "2026-09-08T14:20:27.495Z",
   "mods": [
-    {
-      "id": "bison-ii",
-      "name": [
-        "Bison II",
-        "野牛 II"
-      ],
-      "version": "1.0.0",
-      "author": "Steel Tide",
-      "description": [
-        "A heavier Bison for the late game, with its own hull and turret. The smallest mod there is: one vanilla tank, copied, re-tuned and repainted.",
-        "后期用的重型野牛，有自己的车体和炮塔。最小的模组：复制一辆原版坦克，调数值、换图。"
-      ],
-      "license": "CC-BY-4.0",
-      "path": "mods/bison-ii",
-      "base": "https://raw.githubusercontent.com/rivertwilight/steel-tide-mods/main/mods/bison-ii/",
-      "updated": "2026-09-08T13:47:35+08:00",
-      "defs": [
-        {
-          "id": "bison2",
-          "kind": "unit",
-          "domain": "ground",
-          "tier": 3,
-          "cost": 520,
-          "name": [
-            "Bison II",
-            "野牛 II"
-          ],
-          "sprite": "u.bison2",
-          "turretSprite": "tur.bison2",
-          "extends": "mbt"
-        }
-      ],
-      "sprites": [
-        {
-          "key": "u.bison2",
-          "file": "sprites/u.bison2.png",
-          "frames": 1,
-          "rotated": true,
-          "w": 432,
-          "h": 512
-        },
-        {
-          "key": "tur.bison2",
-          "file": "sprites/tur.bison2.png",
-          "frames": 1,
-          "rotated": true,
-          "w": 271,
-          "h": 512
-        }
-      ]
-    },
     {
       "id": "ironworks",
       "name": [
         "Ironworks",
         "铁工厂"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "author": "Steel Tide",
       "description": [
-        "A hover tank with its own art, a bunker, and a fourth level for the power plant line — one of each thing a mod can add.",
-        "一辆自带图像的悬浮坦克、一座碉堡和发电厂线的第四级——模组能加的每种东西各一个。"
+        "A hover tank with its own art and sound, a turreted bunker, and a fourth level for the power plant line — one of each thing a mod can add.",
+        "一辆自带图像和音效的悬浮坦克、一座带旋转炮塔的碉堡，以及发电厂线的第四级——模组能加的每种东西各一个。"
       ],
       "license": "CC-BY-4.0",
       "path": "mods/ironworks",
@@ -93,7 +42,8 @@
             "Bunker",
             "碉堡"
           ],
-          "sprite": "u.ironworks-bunker"
+          "sprite": "u.ironworks-bunker",
+          "turretSprite": "tur.ironworks-bunker"
         },
         {
           "id": "ironworks-fusion",
@@ -124,6 +74,24 @@
           "frames": 1,
           "w": 512,
           "h": 512
+        },
+        {
+          "key": "tur.ironworks-bunker",
+          "file": "sprites/tur.ironworks-bunker.png",
+          "frames": 1,
+          "rotated": true,
+          "w": 341,
+          "h": 512
+        }
+      ],
+      "sounds": [
+        {
+          "key": "ironworks-autocannon",
+          "file": "sfx/ironworks-autocannon.mp3"
+        },
+        {
+          "key": "ironworks-pods",
+          "file": "sfx/ironworks-pods.mp3"
         }
       ]
     }

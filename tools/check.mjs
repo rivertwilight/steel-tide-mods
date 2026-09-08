@@ -35,6 +35,15 @@ function isImage(bytes) {
   return png || jpg || webp;
 }
 
+function isAudio(bytes) {
+  const id3 = bytes[0] === 0x49 && bytes[1] === 0x44 && bytes[2] === 0x33;
+  const mpeg = bytes[0] === 0xff && (bytes[1] & 0xe0) === 0xe0;
+  const riff = bytes[0] === 0x52 && bytes[1] === 0x49 && bytes[2] === 0x46 && bytes[3] === 0x46;
+  const ogg = bytes[0] === 0x4f && bytes[1] === 0x67 && bytes[2] === 0x67 && bytes[3] === 0x53;
+  return id3 || mpeg || riff || ogg;
+}
+const MAX_SOUND_BYTES = 1024 * 1024;
+
 for (const folder of folders) {
   const label = `mods/${basename(folder)}`;
   const errors = [];
@@ -59,13 +68,21 @@ for (const folder of folders) {
       if (!isImage(bytes)) errors.push({ path: `sprites[${i}].file`, message: `${sheet.file} is not a PNG, WebP or JPEG` });
       if (bytes.length > MAX_SHEET_BYTES) errors.push({ path: `sprites[${i}].file`, message: `${sheet.file} is ${(bytes.length / 1048576).toFixed(1)} MB; keep a sheet under 4` });
     }
+    for (const [i, sound] of (mod.sounds ?? []).entries()) {
+      const file = join(folder, sound.file);
+      if (!existsSync(file)) { errors.push({ path: `sounds[${i}].file`, message: `${sound.file} is missing` }); continue; }
+      const bytes = readFileSync(file);
+      if (!isAudio(bytes)) errors.push({ path: `sounds[${i}].file`, message: `${sound.file} is not an MP3, WAV or OGG` });
+      if (bytes.length > MAX_SOUND_BYTES) errors.push({ path: `sounds[${i}].file`, message: `${sound.file} is ${(bytes.length / 1024).toFixed(0)} KB; keep a one-shot under 1 MB` });
+      if (/\.ogg$/i.test(sound.file)) warnings.push({ path: `sounds[${i}].file`, message: `${sound.file}: OGG does not play on Safari; MP3 plays everywhere` });
+    }
     if (!existsSync(join(folder, 'README.md'))) warnings.push({ path: 'README.md', message: 'a README tells players what the mod is about' });
     loaded.push({ mod, label });
   }
   for (const e of errors) console.error(`  ✗ ${label} ${e.path}: ${e.message}`);
   for (const w of warnings) console.warn(`  ! ${label} ${w.path}: ${w.message}`);
   if (errors.length > 0) failed = true;
-  else console.log(`✓ ${label} (${parsed.mod.defs.length} defs, ${(parsed.mod.sprites ?? []).length} sheets)`);
+  else console.log(`✓ ${label} (${parsed.mod.defs.length} defs, ${(parsed.mod.sprites ?? []).length} sheets${(parsed.mod.sounds ?? []).length ? `, ${parsed.mod.sounds.length} sounds` : ''})`);
 }
 
 // what only the whole registry can tell: two mods claiming the same id, alias or sheet key
