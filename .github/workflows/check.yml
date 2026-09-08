@@ -1,0 +1,43 @@
+name: Registry
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node tools/check.mjs
+
+  index:
+    # the index is rebuilt from what is on main, and committed back
+    if: github.event_name == 'push'
+    needs: check
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node tools/build-index.mjs
+      - name: commit index.json
+        run: |
+          if git diff --quiet -- index.json; then
+            echo "index.json is current"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.json
+          git commit -m "index: rebuild [skip ci]"
+          git push

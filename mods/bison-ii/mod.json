@@ -1,0 +1,28 @@
+{
+  "format": "steel-tide-mod",
+  "v": 1,
+  "id": "bison-ii",
+  "name": ["Bison II", "野牛 II"],
+  "version": "1.0.0",
+  "author": "Steel Tide",
+  "description": ["A heavier Bison for the late game. The smallest mod there is: one vanilla tank, copied and re-tuned.", "后期用的重型野牛。最小的模组：复制一辆原版坦克，再调数值。"],
+  "license": "CC-BY-4.0",
+  "defs": [
+    {
+      "id": "bison2",
+      "extends": "mbt",
+      "name": ["Bison II", "野牛 II"],
+      "desc": ["Thicker plate, a bigger gun, and a bigger bill. Needs a Radar Station.", "更厚的装甲、更大的炮，也更贵。需要雷达站。"],
+      "tier": 3,
+      "cost": 520,
+      "buildTime": 30,
+      "hp": 1100,
+      "speed": 52,
+      "requires": ["radar"],
+      "weapons": [
+        { "id": "cannon", "cls": "cannon", "dmg": 90, "reload": 2, "range": 5, "splash": 12, "turret": true, "muzzleOffset": 23 }
+      ],
+      "aiWeight": 2
+    }
+  ]
+}

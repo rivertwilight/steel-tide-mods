@@ -1,0 +1,112 @@
+{
+  "format": "steel-tide-mod-index",
+  "v": 1,
+  "generated": "2026-09-08T04:33:45.458Z",
+  "mods": [
+    {
+      "id": "bison-ii",
+      "name": [
+        "Bison II",
+        "野牛 II"
+      ],
+      "version": "1.0.0",
+      "author": "Steel Tide",
+      "description": [
+        "A heavier Bison for the late game. The smallest mod there is: one vanilla tank, copied and re-tuned.",
+        "后期用的重型野牛。最小的模组：复制一辆原版坦克，再调数值。"
+      ],
+      "license": "CC-BY-4.0",
+      "path": "mods/bison-ii",
+      "base": "https://raw.githubusercontent.com/rivertwilight/steel-tide-mods/main/mods/bison-ii/",
+      "defs": [
+        {
+          "id": "bison2",
+          "kind": "unit",
+          "domain": "ground",
+          "tier": 3,
+          "cost": 520,
+          "name": [
+            "Bison II",
+            "野牛 II"
+          ],
+          "sprite": "u.mbt",
+          "turretSprite": "tur.mbt",
+          "extends": "mbt"
+        }
+      ],
+      "sprites": []
+    },
+    {
+      "id": "ironworks",
+      "name": [
+        "Ironworks",
+        "铁工厂"
+      ],
+      "version": "1.0.0",
+      "author": "Steel Tide",
+      "description": [
+        "A hover tank with its own art, a bunker, and a fourth level for the power plant line — one of each thing a mod can add.",
+        "一辆自带图像的悬浮坦克、一座碉堡和发电厂线的第四级——模组能加的每种东西各一个。"
+      ],
+      "license": "CC-BY-4.0",
+      "path": "mods/ironworks",
+      "base": "https://raw.githubusercontent.com/rivertwilight/steel-tide-mods/main/mods/ironworks/",
+      "defs": [
+        {
+          "id": "ironworks-hover",
+          "kind": "unit",
+          "domain": "ground",
+          "tier": 2,
+          "cost": 260,
+          "name": [
+            "Skimmer Hover Tank",
+            "掠行悬浮坦克"
+          ],
+          "sprite": "u.ironworks-hover"
+        },
+        {
+          "id": "ironworks-bunker",
+          "kind": "building",
+          "domain": "none",
+          "tier": 1,
+          "cost": 380,
+          "name": [
+            "Bunker",
+            "碉堡"
+          ],
+          "sprite": "u.ironworks-bunker"
+        },
+        {
+          "id": "ironworks-fusion",
+          "kind": "building",
+          "domain": "none",
+          "tier": 3,
+          "cost": 2200,
+          "name": [
+            "Fusion Plant",
+            "聚变电站"
+          ],
+          "sprite": "u.power3",
+          "extends": "power3"
+        }
+      ],
+      "sprites": [
+        {
+          "key": "u.ironworks-hover",
+          "file": "sprites/hover.png",
+          "frames": 1,
+          "rotated": true,
+          "w": 48,
+          "h": 52
+        },
+        {
+          "key": "u.ironworks-bunker",
+          "file": "sprites/bunker.png",
+          "frames": 2,
+          "w": 256,
+          "h": 128
+        }
+      ]
+    }
+  ]
+}
